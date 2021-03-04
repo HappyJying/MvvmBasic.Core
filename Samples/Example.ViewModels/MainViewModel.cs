@@ -14,15 +14,16 @@ namespace Example.ViewModels
 
         public MainViewModel()
         {
-            for (int i = 0; i < 26; i++)
+            var items = new Item[26];
+            for (int i = 0; i < items.Length; i++)
             {
-                var item = new Item
+                items[i] = new Item
                 {
                     Id = i + 1,
                     Name = ((char)('A' + i)).ToString(),
                 };
-                Items.Add(item);
             }
+            Items.AddRange(items);
         }
 
         private void OnHello()

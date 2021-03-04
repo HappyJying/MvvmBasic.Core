@@ -14,8 +14,8 @@
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\MvvmBasic.Core\MvvmBasic.Core.csproj" />
     <ProjectReference Include="..\Example.Shared\Example.Shared.csproj" />
-    <ProjectReference Include="..\MvvmBasic.Core\MvvmBasic.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
