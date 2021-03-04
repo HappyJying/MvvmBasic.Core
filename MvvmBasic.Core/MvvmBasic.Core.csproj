@@ -5,6 +5,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Version>1.0.5</Version>
     <Authors>Jying</Authors>
+    <PackageProjectUrl>https://github.com/HappyJying/MvvmBasic.Core</PackageProjectUrl>
   </PropertyGroup>
 
 </Project>
