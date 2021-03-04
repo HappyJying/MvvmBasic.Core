@@ -10,7 +10,7 @@ namespace Example.ViewModels
         public ObservableCollection<Item> Items { get; set; } = new ObservableCollection<Item>();
 
         private RelayCommand _hello;
-        public RelayCommand Hello => _hello ?? (_hello = new RelayCommand(OnHello));
+        public RelayCommand Hello => _hello ??= new RelayCommand(OnHello);
 
         public MainViewModel()
         {

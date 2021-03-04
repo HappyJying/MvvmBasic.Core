@@ -1,5 +1,4 @@
-﻿using Example.Shared;
-using MvvmBasic.Core;
+﻿using MvvmBasic.Core;
 
 namespace Example.Mobile
 {

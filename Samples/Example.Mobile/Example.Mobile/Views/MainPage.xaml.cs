@@ -1,5 +1,4 @@
-﻿using Example.Shared;
-using Example.ViewModels;
+﻿using Example.ViewModels;
 using MvvmBasic.Core;
 using System.Linq;
 

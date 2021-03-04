@@ -1,4 +1,4 @@
-﻿namespace Example.Shared
+﻿namespace MvvmBasic.Core
 {
     public enum Messages
     {

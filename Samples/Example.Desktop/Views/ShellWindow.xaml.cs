@@ -2,7 +2,6 @@
 using System.Windows.Controls;
 using Example.Desktop.Contracts.Views;
 using Example.Desktop.ViewModels;
-using Example.Shared;
 using MahApps.Metro.Controls;
 using MvvmBasic.Core;
 

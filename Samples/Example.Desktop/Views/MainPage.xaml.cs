@@ -1,5 +1,4 @@
 ﻿using System.Windows.Controls;
-using Example.Shared;
 using Example.ViewModels;
 using MvvmBasic.Core;
 
