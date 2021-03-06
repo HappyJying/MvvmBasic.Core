@@ -7,7 +7,7 @@ namespace Example.Mobile
         public AppShell()
         {
             InitializeComponent();
-            Messager.Subscribe(Messages.Alert, m => DisplayAlert("", "Hello", "确定"));
+            Messager.Subscribe(Messages.Alert, m => DisplayAlert("", (string)m[0], "确定"));
         }
     }
 }
