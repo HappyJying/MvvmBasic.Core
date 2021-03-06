@@ -10,12 +10,10 @@ namespace Example.Mobile.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainPage : ContentPage
     {
-        private readonly MainViewModel viewModel;
-
         public MainPage()
         {
             InitializeComponent();
-            viewModel = DependencyService.Resolve<MainViewModel>();
+            var viewModel = DependencyService.Get<MainViewModel>();
             BindingContext = viewModel;
             Messager.Subscribe(Messages.Scroll, m => ListView.ScrollTo(viewModel.Items.Last(), ScrollToPosition.MakeVisible, true));
         }

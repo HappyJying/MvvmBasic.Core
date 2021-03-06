@@ -1,9 +1,5 @@
-﻿using Example.Mobile.Services;
-using Example.Mobile.Views;
-using Example.ViewModels;
-using System;
+﻿using Example.ViewModels;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace Example.Mobile
 {
@@ -13,8 +9,6 @@ namespace Example.Mobile
         public App()
         {
             InitializeComponent();
-
-            DependencyService.Register<MockDataStore>();
             DependencyService.Register<MainViewModel>();
             MainPage = new AppShell();
         }
