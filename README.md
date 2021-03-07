@@ -1,41 +1,43 @@
 # Get Started
 
-Step 1: Define ViewModel.
-
 ```csharp
-public class MainViewModel : Observable { }
-```
+using MvvmBasic.Core;
 
-Step 2: Command Binding.
+public class MainViewModel : Observable
+{
+    // Value Binding
+    private string _title;
+    public string Title
+    {
+        get => _title;
+        set => Set(ref _title, value);
+    }
 
-```csharp
-public RelayCommand Hello => _hello ?? (_hello = new RelayCommand(OnHello));
+    // Command Binding
+    private RelayCommand _hello;
+    public RelayCommand Hello => _hello ?? (_hello = new RelayCommand(OnHello));
 
-private void OnHello() { };
-```
+    public MainViewModel()
+    {
+        // Subscribe Message
+        Messager.Subscribe(Messages.Alert, m =>
+        {
+            System.Windows.MessageBox.Show((string)m[0]);
+        });
+        // Subscribe Message On UI Thread
+        Messager.Subscribe(Messages.Alert, m =>
+        {
+            System.Windows.MessageBox.Show((string)m[0]);
+        }, true);
+    }
 
-# Use Messager
+    private void OnHello()
+    {
+        // Publish Message
+        Messager.Publish(Messages.Alert, "Hello");
 
-Step 1: Define Message Constants.
-
-```csharp
-public enum Messages { Alert }
-```
-
-Step 2: Subscribe Message Event.
-
-```csharp
-Messager.Subscribe(Messages.Alert, m => MessageBox.Show((string)m[0]));
-```
-
-Subscribe On UI Thread:
-
-```csharp
-Messager.Subscribe(Messages.Alert, m => MessageBox.Show((string)m[0]), true);
-```
-
-Step 3: Publish Message Event.
-
-```csharp
-Messager.Publish(Messages.Alert, "Hello");
+        // Unsubscribe Message
+        Messager.Unsubscribe(Messages.Alert);
+    }
+}
 ```
