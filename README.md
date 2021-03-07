@@ -1,34 +1,41 @@
 # Get Started
 
-Step 1: Custom Message Constants.
+Step 1: Define ViewModel.
 
-<code>
-public enum Messages
-{
-    Alert
-}
-</code>
-<br />
-<br />
+```csharp
+public class MainViewModel : Observable { }
+```
+
+Step 2: Command Binding.
+
+```csharp
+public RelayCommand Hello => _hello ?? (_hello = new RelayCommand(OnHello));
+
+private void OnHello() { };
+```
+
+# Use Messager
+
+Step 1: Define Message Constants.
+
+```csharp
+public enum Messages { Alert }
+```
 
 Step 2: Subscribe Message Event.
 
-<code>
+```csharp
 Messager.Subscribe(Messages.Alert, m => MessageBox.Show((string)m[0]));
-</code>
-<br />
-<br />
+```
 
 Subscribe On UI Thread:
 
-<code>
+```csharp
 Messager.Subscribe(Messages.Alert, m => MessageBox.Show((string)m[0]), true);
-</code>
-<br />
-<br />
+```
 
 Step 3: Publish Message Event.
 
-<code>
+```csharp
 Messager.Publish(Messages.Alert, "Hello");
-</code>
+```
