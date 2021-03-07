@@ -24,6 +24,7 @@ public class MainViewModel : Observable
         {
             System.Windows.MessageBox.Show((string)m[0]);
         });
+        
         // Subscribe Message On UI Thread
         Messager.Subscribe(Messages.Alert, m =>
         {
