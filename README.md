@@ -14,8 +14,8 @@ public class MainViewModel : Observable
     }
 
     // Command Binding
-    private RelayCommand _hello;
-    public RelayCommand Hello => _hello ?? (_hello = new RelayCommand(OnHello));
+    private RelayCommand _click;
+    public RelayCommand Click => _click ?? (_click = new RelayCommand(OnClick));
 
     public MainViewModel()
     {
@@ -32,10 +32,10 @@ public class MainViewModel : Observable
         }, true);
     }
 
-    private void OnHello()
+    private void OnClick()
     {
         // Publish Message
-        Messager.Publish(Messages.Alert, "Hello");
+        Messager.Publish(Messages.Alert, "Hello World!");
 
         // Unsubscribe Message
         Messager.Unsubscribe(Messages.Alert);
