@@ -1,0 +1,56 @@
+﻿<Window x:Class="Sample.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Sample"
+        mc:Ignorable="d"
+        Title="Sample" Height="450" Width="800"
+        WindowStartupLocation="CenterScreen"
+        d:DataContext="{d:DesignInstance Type=local:MainViewModel}">
+    <Grid>
+        <DockPanel>
+            <Grid Margin="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"></RowDefinition>
+                    <RowDefinition Height="2*"></RowDefinition>
+                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="1*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <GroupBox Header="Subscribe Message" Grid.Row="0">
+                    <StackPanel VerticalAlignment="Center">
+                        <Button Command="{Binding SubscribeMessage}" Content="Subscribe" ToolTip="subscribe a normal message" Margin="5"></Button>
+                        <Button Command="{Binding SubscribeMessageOnUIThread}" Content="On UI Thread" ToolTip="subscribe a message whose event method can be called on the UI thread" Margin="5"></Button>
+                        <Button Command="{Binding SubscribeMessageWithResult}" Content="With Result" ToolTip="subscribe a message with a return value" Margin="5"></Button>
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Header="Publish Message" Grid.Row="1">
+                    <StackPanel VerticalAlignment="Center">
+                        <Button Command="{Binding PublishMessage}" Content="Publish" ToolTip="publish a normal message" Margin="5"></Button>
+                        <Button Command="{Binding PublishMessageOnBackgroundThread}" Content="On Background Thread" ToolTip="publish a message on a background thread" Margin="5"></Button>
+                        <Button Command="{Binding PublishMessageForResult}" Content="For Result" ToolTip="publish a message for a return value" Margin="5"></Button>
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Header="Unsubscribe Message" Grid.Row="2">
+                    <StackPanel VerticalAlignment="Center">
+                        <Button Command="{Binding UnsubscribeMessage}" Content="Unsubscribe" ToolTip="unsubscribe a message" Margin="5"></Button>
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Header="Clear Message List" Grid.Row="3">
+                    <StackPanel VerticalAlignment="Center">
+                        <Button Command="{Binding ClearMessageList}" Content="Clear" ToolTip="clear the message list" Margin="5"></Button>
+                    </StackPanel>
+                </GroupBox>
+            </Grid>
+            <GroupBox Header="Message List" Margin="5">
+                <ListBox ItemsSource="{Binding MessageList}" BorderThickness="0">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}"></TextBlock>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </GroupBox>
+        </DockPanel>
+    </Grid>
+</Window>

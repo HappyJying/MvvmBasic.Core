@@ -7,20 +7,46 @@ namespace MvvmBasic.Core
     {
         private static readonly List<Event> events = new List<Event>();
 
-        public static void Publish(object message, params object[] obj)
+        public static void Publish(object message, params object[] args)
         {
-            var events = FindAll(message);
-            events.ForEach(e =>
+            List<Event> es = events.FindAll(a => a.Action != null && Equals(a.Message, message));
+            foreach (Event e in es)
             {
-                if (e == null || e.Action == null) return;
-                if (!e.OnUIThread) e.Action.Invoke(obj);
-                else e.Context?.Post((o) => e.Action((object[])o), obj);
-            });
+                if (e.OnUIThread)
+                {
+                    e.Context?.Post(o => e.Action((object[])o), args);
+                }
+                else
+                {
+                    e.Action.Invoke(args);
+                }
+            }
+        }
+
+        public static T Publish<T>(object message, params object[] args)
+        {
+            Event e = events.Find(a => a.Func != null && Equals(a.Message, message));
+            if (e == null)
+            {
+                return default;
+            }
+            return (T)e.Func.Invoke(args);
         }
 
         public static void Subscribe(object message, Action<object[]> action, bool onUIThread = false)
         {
-            if (!Exists(message, action, onUIThread)) events.Add(new Event(message, action, onUIThread));
+            if (!events.Exists(a => Equals(a.Message, message) && a.Action == action && a.OnUIThread == onUIThread))
+            {
+                events.Add(new Event(message, action, onUIThread));
+            }
+        }
+
+        public static void Subscribe(object message, Func<object[], object> func)
+        {
+            if (!events.Exists(a => Equals(a.Message, message) && a.Func == func))
+            {
+                events.Add(new Event(message, func));
+            }
         }
 
         public static void Unsubscribe(object message)
@@ -28,14 +54,5 @@ namespace MvvmBasic.Core
             events.RemoveAll(a => Equals(a.Message, message));
         }
 
-        private static bool Exists(object message, Action<object[]> action, bool onUIThread = false)
-        {
-            return events.Exists(a => Equals(a.Message, message) && a.Action == action && a.OnUIThread == onUIThread);
-        }
-
-        private static List<Event> FindAll(object message)
-        {
-            return events.FindAll(a => Equals(a.Message, message));
-        }
     }
 }

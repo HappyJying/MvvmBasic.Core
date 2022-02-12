@@ -1,44 +1,81 @@
 # Getting Started
 
-```csharp
+```c#
 using MvvmBasic.Core;
+using System;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
-public class MainViewModel : Observable
+// message constants definition
+internal enum Messages
 {
-    // Value Binding
-    private string _title;
-    public string Title
+    AddMessage
+}
+
+internal class MainViewModel : Observable
+{
+    // value binding
+    private string _text;
+    public string Text
     {
-        get => _title;
-        set => Set(ref _title, value);
+        get => _text;
+        set => Set(ref _text, value);
     }
 
-    // Command Binding
-    private RelayCommand _click;
-    public RelayCommand Click => _click ?? (_click = new RelayCommand(OnClick));
+    // collection binding
+    public ObservableCollection<string> MessageList { get; } = new();
+
+    // command binding
+    private RelayCommand _test;
+    public RelayCommand Test => _test ??= new RelayCommand(OnTest);
+    private void OnTest() {}
 
     public MainViewModel()
     {
-        // Subscribe Message
-        Messager.Subscribe(Messages.Alert, m =>
-        {
-            System.Windows.MessageBox.Show((string)m[0]);
+        // subscribe a normal message
+        Messager.Subscribe(Messages.AddMessage, args =>
+        { 
+            if (args[0] is string message)
+            {
+                MessageList.Add(message);
+            }
         });
-        
-        // Subscribe Message On UI Thread
-        Messager.Subscribe(Messages.Alert, m =>
+
+        // subscribe a message whose event method can be called on the UI thread
+        Messager.Subscribe(Messages.AddMessage, args =>
         {
-            System.Windows.MessageBox.Show((string)m[0]);
+            if (args[0] is string message)
+            {
+                MessageList.Add(message);
+            }
         }, true);
+        
+        // subscribe a message with a return value
+        Messager.Subscribe(Messages.AddMessage, args =>
+        {
+            if (args[0] is string message)
+            {
+                MessageList.Add(message);
+                return true;
+            }
+            return false;
+        });
+
+        // publish a normal message
+        Messager.Publish(Messages.AddMessage, "Hello, World!");
+
+        // publish a message on a background thread
+        Task.Run(() =>
+        {
+            Messager.Publish(Messages.AddMessage, "Hello, World!");
+        });
+
+        // publish a message for a return value
+        bool result = Messager.Publish<bool>(Messages.AddMessage, "Hello, World!");
+
+        // unsubscribe a message
+        Messager.Unsubscribe(Messages.AddMessage);
     }
 
-    private void OnClick()
-    {
-        // Publish Message
-        Messager.Publish(Messages.Alert, "Hello World!");
-
-        // Unsubscribe Message
-        Messager.Unsubscribe(Messages.Alert);
-    }
 }
 ```
