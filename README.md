@@ -1,18 +1,25 @@
 # Getting Started
 
+## Install NuGet Package
+
+```
+Install-Package MvvmBasic.Core
+```
+## Samples
+
 ```c#
 using MvvmBasic.Core;
 using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
-// message constants definition
-internal enum Messages
+// messages definition
+enum Messages
 {
     AddMessage
 }
 
-internal class MainViewModel : Observable
+class MainViewModel : Observable
 {
     // value binding
     private string _text;
@@ -32,7 +39,7 @@ internal class MainViewModel : Observable
 
     public MainViewModel()
     {
-        // subscribe a normal message
+        // subscribe to a normal message
         Messager.Subscribe(Messages.AddMessage, args =>
         { 
             if (args[0] is string message)
@@ -41,7 +48,7 @@ internal class MainViewModel : Observable
             }
         });
 
-        // subscribe a message whose event method can be called on the UI thread
+        // subscribe to a message whose event method can be called on the UI thread
         Messager.Subscribe(Messages.AddMessage, args =>
         {
             if (args[0] is string message)
@@ -50,7 +57,7 @@ internal class MainViewModel : Observable
             }
         }, true);
         
-        // subscribe a message with a return value
+        // subscribe to a message with a return value
         Messager.Subscribe(Messages.AddMessage, args =>
         {
             if (args[0] is string message)
@@ -58,6 +65,7 @@ internal class MainViewModel : Observable
                 MessageList.Add(message);
                 return true;
             }
+
             return false;
         });
 
@@ -73,7 +81,7 @@ internal class MainViewModel : Observable
         // publish a message for a return value
         bool result = Messager.Publish<bool>(Messages.AddMessage, "Hello, World!");
 
-        // unsubscribe a message
+        // unsubscribe from a message
         Messager.Unsubscribe(Messages.AddMessage);
     }
 

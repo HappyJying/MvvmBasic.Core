@@ -27,10 +27,16 @@ namespace MvvmBasic.Core
             }
         }
 
-        public Event(object message, Func<object[], object> func)
+        public Event(object message, Func<object[], object> func, bool onUIThread = false)
         {
             Message = message;
             Func = func;
+            OnUIThread = onUIThread;
+
+            if (OnUIThread)
+            {
+                Context = SynchronizationContext.Current;
+            }
         }
     }
 }

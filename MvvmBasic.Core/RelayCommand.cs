@@ -21,9 +21,9 @@ namespace MvvmBasic.Core
             _canExecute = canExecute;
         }
 
-        public bool CanExecute(object parameter) => _canExecute == null || _canExecute();
+        public bool CanExecute(object parameter = null) => _canExecute == null || _canExecute();
 
-        public void Execute(object parameter) => _execute();
+        public void Execute(object parameter = null) => _execute();
 
         public void OnCanExecuteChanged() => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
     }
